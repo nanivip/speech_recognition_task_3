@@ -1,0 +1,28 @@
+var recognition = new webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.interimResults = true;
+
+document.getElementById('start-btn').onclick = function() {
+    recognition.start();
+    this.disabled = true;
+    document.getElementById('stop-btn').disabled = false;
+};
+
+document.getElementById('stop-btn').onclick = function() {
+    recognition.stop();
+    this.disabled = true;
+    document.getElementById('start-btn').disabled = false;
+};
+
+recognition.onresult = function(event) {
+    var transcript = '';
+    for (var i = event.resultIndex; i < event.results.length; ++i) {
+        transcript += event.results[i][0].transcript;
+    }
+    document.getElementById('transcript').value = transcript;
+};
+
+document.getElementById('save-btn').onclick = function() {
+    var textToSave = document.getElementById('transcript').value;
+    // Send textToSave to the server to save as Excel
+};
